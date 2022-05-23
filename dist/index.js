@@ -1,22 +1,26 @@
-
-function round(number: number): number {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MoreRounding = void 0;
+function round(number) {
     return Math.round(number);
 }
-function roundUp(number: number): number {
+function roundUp(number) {
     return Math.ceil(number);
 }
-function roundDown(number: number): number {
+function roundDown(number) {
     return Math.floor(number);
 }
-function toZero(number: number): number {
-    if (number <= 0) return Math.ceil(number);
+function toZero(number) {
+    if (number <= 0)
+        return Math.ceil(number);
     return Math.floor(number);
 }
-function fromZero(number: number): number {
-    if (number >= 0) return Math.ceil(number);
+function fromZero(number) {
+    if (number >= 0)
+        return Math.ceil(number);
     return Math.floor(number);
 }
-function toPrecision(number: number, precision: number = 1, mode: 'normal' | 'up' | 'down' | 'to_zero' | 'from_zero' = 'normal'): number {
+function toPrecision(number, precision = 1, mode = 'normal') {
     precision = 10 ** precision;
     switch (mode) {
         case 'normal':
@@ -31,7 +35,7 @@ function toPrecision(number: number, precision: number = 1, mode: 'normal' | 'up
             return fromZero(number * precision) / precision;
     }
 }
-function toMultiple(number: number, multiple: number = 1, mode: 'normal' | 'up' | 'down' | 'to_zero' | 'from_zero' = 'normal'): number {
+function toMultiple(number, multiple = 1, mode = 'normal') {
     switch (mode) {
         case 'normal':
             return round(number / multiple) * multiple;
@@ -46,10 +50,10 @@ function toMultiple(number: number, multiple: number = 1, mode: 'normal' | 'up' 
     }
 }
 const APPROXIMATION_UNITS = {
-    k:  1e3,
-    M:  1e6,
-    B:  1e9,
-    T:  1e12,
+    k: 1e3,
+    M: 1e6,
+    B: 1e9,
+    T: 1e12,
     Qa: 1e15,
     Qi: 1e18,
     Sx: 1e21,
@@ -57,30 +61,28 @@ const APPROXIMATION_UNITS = {
     Oc: 1e27,
     No: 1e30,
     Dc: 1e33,
-}
-type ApproximationUnit = keyof typeof APPROXIMATION_UNITS;
-
-function approximate(number: number, precision: number = 1, unit?: ApproximationUnit, locale?: string): string {
+};
+function approximate(number, precision = 1, unit, locale) {
     if (!unit) {
         const units = Object.keys(APPROXIMATION_UNITS);
         for (let i = 0; i < units.length; i++) {
-            let unit = units[i] as keyof typeof APPROXIMATION_UNITS;
+            let unit = units[i];
             let divider = APPROXIMATION_UNITS[unit];
             let dividedNumber = number / divider;
             if (dividedNumber >= 1 && dividedNumber < 1000) {
-                if (locale) return String(toPrecision(dividedNumber, precision).toLocaleString(locale)) + unit;
+                if (locale)
+                    return String(toPrecision(dividedNumber, precision).toLocaleString(locale)) + unit;
                 return String(toPrecision(dividedNumber, precision)) + unit;
             }
         }
         return String(toPrecision(number, precision).toLocaleString(locale));
     }
     let divider = APPROXIMATION_UNITS[unit];
-    if (locale) return String(toPrecision(number / divider, precision).toLocaleString(locale)) + unit;
+    if (locale)
+        return String(toPrecision(number / divider, precision).toLocaleString(locale)) + unit;
     return String(toPrecision(number / divider, precision)) + unit;
 }
-
-
-export const MoreRounding = {
+exports.MoreRounding = {
     round,
     roundUp,
     roundDown,
@@ -89,4 +91,4 @@ export const MoreRounding = {
     toPrecision,
     toMultiple,
     approximate,
-}
+};
