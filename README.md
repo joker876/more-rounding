@@ -12,7 +12,7 @@ npm install more-rounding --save
 ```
 ### Web
 ```html
-<script src="https://joker876.github.io/more-rounding/dist/index.js"></script>
+<script src="https://joker876.github.io/more-rounding/dist/index.min.js"></script>
 ```
 
 ## Usage

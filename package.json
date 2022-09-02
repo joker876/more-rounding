@@ -1,16 +1,16 @@
 {
   "name": "more-rounding",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A library that offers more number rounding options for JavaScript and TypeScript",
-  "main": "src/index.js",
+  "main": "dist/index.min.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist/index.js",
-    "dist/index.d.ts"
+    "dist/*"
   ],
   "scripts": {
     "test": "tsc && npx jasmine",
-    "start": "ts-node-dev --respawn src/index.ts"
+    "start": "ts-node-dev --respawn src/index.ts",
+    "build": "rmdir /s /Q dist & tsc && terser dist/index.js --output dist/index.min.js --config_file terserconfig.json --comments /^\\*\\n/ && cd dist && del /f index.js"
   },
   "repository": {
     "type": "git",
