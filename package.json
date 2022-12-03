@@ -1,6 +1,6 @@
 {
   "name": "more-rounding",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "A library that offers more number rounding options for JavaScript and TypeScript",
   "main": "dist/index.min.js",
   "types": "dist/index.d.ts",
