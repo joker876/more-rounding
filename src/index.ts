@@ -1,22 +1,22 @@
 
-function round(number: number): number {
+export function round(number: number): number {
     return Math.round(number);
 }
-function roundUp(number: number): number {
+export function roundUp(number: number): number {
     return Math.ceil(number);
 }
-function roundDown(number: number): number {
+export function roundDown(number: number): number {
     return Math.floor(number);
 }
-function toZero(number: number): number {
+export function roundToZero(number: number): number {
     if (number <= 0) return Math.ceil(number);
     return Math.floor(number);
 }
-function fromZero(number: number): number {
+export function roundFromZero(number: number): number {
     if (number >= 0) return Math.ceil(number);
     return Math.floor(number);
 }
-function toPrecision(number: number, precision: number = 1, mode: 'normal' | 'up' | 'down' | 'to_zero' | 'from_zero' = 'normal'): number {
+export function roundToPrecision(number: number, precision: number = 1, mode: 'normal' | 'up' | 'down' | 'to_zero' | 'from_zero' = 'normal'): number {
     precision = 10 ** precision;
     switch (mode) {
         case 'normal':
@@ -26,12 +26,12 @@ function toPrecision(number: number, precision: number = 1, mode: 'normal' | 'up
         case 'down':
             return roundDown(number * precision) / precision;
         case 'to_zero':
-            return toZero(number * precision) / precision;
+            return roundToZero(number * precision) / precision;
         case 'from_zero':
-            return fromZero(number * precision) / precision;
+            return roundFromZero(number * precision) / precision;
     }
 }
-function toMultiple(number: number, multiple: number = 1, mode: 'normal' | 'up' | 'down' | 'to_zero' | 'from_zero' = 'normal'): number {
+export function roundToMultiple(number: number, multiple: number = 1, mode: 'normal' | 'up' | 'down' | 'to_zero' | 'from_zero' = 'normal'): number {
     switch (mode) {
         case 'normal':
             return round(number / multiple) * multiple;
@@ -40,12 +40,12 @@ function toMultiple(number: number, multiple: number = 1, mode: 'normal' | 'up' 
         case 'down':
             return roundDown(number / multiple) * multiple;
         case 'to_zero':
-            return toZero(number / multiple) * multiple;
+            return roundToZero(number / multiple) * multiple;
         case 'from_zero':
-            return fromZero(number / multiple) * multiple;
+            return roundFromZero(number / multiple) * multiple;
     }
 }
-const APPROXIMATION_UNITS = {
+export const APPROXIMATION_UNITS = {
     k:  1e3,
     M:  1e6,
     B:  1e9,
@@ -58,9 +58,9 @@ const APPROXIMATION_UNITS = {
     No: 1e30,
     Dc: 1e33,
 }
-type ApproximationUnit = keyof typeof APPROXIMATION_UNITS;
+export type ApproximationUnit = keyof typeof APPROXIMATION_UNITS;
 
-function approximate(number: number, precision: number = 1, unit?: ApproximationUnit, locale?: string): string {
+export function approximate(number: number, precision: number = 1, unit?: ApproximationUnit, locale?: string): string {
     if (!unit) {
         const units = Object.keys(APPROXIMATION_UNITS);
         for (let i = 0; i < units.length; i++) {
@@ -68,25 +68,13 @@ function approximate(number: number, precision: number = 1, unit?: Approximation
             let divider = APPROXIMATION_UNITS[unit];
             let dividedNumber = number / divider;
             if (dividedNumber >= 1 && dividedNumber < 1000) {
-                if (locale) return String(toPrecision(dividedNumber, precision).toLocaleString(locale)) + unit;
-                return String(toPrecision(dividedNumber, precision)) + unit;
+                if (locale) return String(roundToPrecision(dividedNumber, precision).toLocaleString(locale)) + unit;
+                return String(roundToPrecision(dividedNumber, precision)) + unit;
             }
         }
-        return String(toPrecision(number, precision).toLocaleString(locale));
+        return String(roundToPrecision(number, precision).toLocaleString(locale));
     }
     let divider = APPROXIMATION_UNITS[unit];
-    if (locale) return String(toPrecision(number / divider, precision).toLocaleString(locale)) + unit;
-    return String(toPrecision(number / divider, precision)) + unit;
-}
-
-
-export const MoreRounding = {
-    round,
-    roundUp,
-    roundDown,
-    toZero,
-    fromZero,
-    toPrecision,
-    toMultiple,
-    approximate,
+    if (locale) return String(roundToPrecision(number / divider, precision).toLocaleString(locale)) + unit;
+    return String(roundToPrecision(number / divider, precision)) + unit;
 }
