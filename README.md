@@ -18,7 +18,7 @@ npm install more-rounding --save
 ## Usage
 More Rounding exports a single object, containing all provided functions.
 ```js
-import { MoreRounding } from 'more-rounding';
+import * as MoreRounding from 'more-rounding';
 ```
 
 ### Basic Functions
