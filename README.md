@@ -133,6 +133,7 @@ Rounds a number to a certain long number (subsequent powers of 1,000), to a cert
 * `precision` - the amount of decimal places to be rounded to, on top of the approximation. Positive numbers mean more decimal places, negative numbers will round to subsequent powers of 10. Optional, default 1.
 * `unit` - the unit to round to. Accepts any unit from the table found below. Leaving it undefined will approximate it to the highest unit, where the approximation is in this range: 1,000 > x ≥ 1.
 * `locale` - if specified, the number will be formatted according to this locale. Uses `Number.prototype.toLocaleString()`.
+* `unitMap` - an object used for mapping default units to custom strings. If not specified or there is no mapping for the approximation unit, the default unit string will be used.
 
 ```js
 MoreRounding.approximate(1247)                        // 1.2k
