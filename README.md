@@ -131,7 +131,7 @@ Rounds a number to a certain long number (subsequent powers of 1,000), to a cert
 
 * `number` - the number to be rounded.
 * `precision` - the amount of decimal places to be rounded to, on top of the approximation. Positive numbers mean more decimal places, negative numbers will round to subsequent powers of 10. Optional, default 1.
-* `unit` - the unit to round to. Accepts any unit from the table found below. Leaving it undefined will approximate it to the highest unit, where the approximation is in this range: 1,000 > x > 1.
+* `unit` - the unit to round to. Accepts any unit from the table found below. Leaving it undefined will approximate it to the highest unit, where the approximation is in this range: 1,000 > x ≥ 1.
 * `locale` - if specified, the number will be formatted according to this locale. Uses `Number.prototype.toLocaleString()`.
 
 ```js
@@ -141,3 +141,17 @@ MoreRounding.approximate(1354348, 2)                  // 1.35M
 MoreRounding.approximate(7346834138, 0, 'M')          // 7347M
 MoreRounding.approximate(7346834138, 2, 'M', 'en-US') // 7,346.83M
 ```
+
+| Unit | Equivalent number |
+| ---- | ----------------- |
+| `k`  | 1,000             |
+| `M`  | 1,000,000         |
+| `B`  | 10^9              |
+| `T`  | 10^12             |
+| `Qa` | 10^15             |
+| `Qi` | 10^18             |
+| `Sx` | 10^21             |
+| `Sp` | 10^24             |
+| `Oc` | 10^27             |
+| `No` | 10^30             |
+| `Dc` | 10^33             |
