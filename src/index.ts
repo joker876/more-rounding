@@ -122,7 +122,7 @@ export type ApproximationUnit = keyof typeof APPROXIMATION_UNITS;
  * @param unitMap An object used for mapping default units to custom strings. If not specified or there is no mapping for the approximation unit, the default unit string will be used.
  * @returns The approximate value as a string with the abbreviation for the unit (specified or assumed) appended to it.
  */
-export function approximate(number: number, precision: number = 1, unit?: ApproximationUnit, locale?: string, unitMap?: { [key: ApproximationUnit]: string }): string {
+export function approximate(number: number, precision: number = 1, unit?: ApproximationUnit, locale?: string, unitMap?: { [key in ApproximationUnit]: string }): string {
     if (!unit) {
         const units = Object.keys(APPROXIMATION_UNITS);
         for (let i = 0; i < units.length; i++) {
