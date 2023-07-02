@@ -119,9 +119,10 @@ export type ApproximationUnit = keyof typeof APPROXIMATION_UNITS;
  * @param {number} [precision=1] The number of decimal places to include. Defaults to `1`.
  * @param {ApproximationUnit | undefined} unit The abbreviation for the approximation unit to use. If not provided, will use the largest unit that keeps the value as `1 <= n < 1000`.
  * @param {string | undefined} locale The locale string to use when formatting the result with `toLocaleString()`. If not specified, `String()` will be used.
+ * @param unitMap An object used for mapping default units to custom strings. If not specified or there is no mapping for the approximation unit, the default unit string will be used.
  * @returns The approximate value as a string with the abbreviation for the unit (specified or assumed) appended to it.
  */
-export function approximate(number: number, precision: number = 1, unit?: ApproximationUnit, locale?: string): string {
+export function approximate(number: number, precision: number = 1, unit?: ApproximationUnit, locale?: string, unitMap?: { [key: ApproximationUnit]: string }): string {
     if (!unit) {
         const units = Object.keys(APPROXIMATION_UNITS);
         for (let i = 0; i < units.length; i++) {
@@ -135,7 +136,8 @@ export function approximate(number: number, precision: number = 1, unit?: Approx
         }
         return String(roundToPrecision(number, precision).toLocaleString(locale));
     }
-    let divider = APPROXIMATION_UNITS[unit];
-    if (locale) return roundToPrecision(number / divider, precision).toLocaleString(locale) + unit;
-    return String(roundToPrecision(number / divider, precision)) + unit;
+    const divider = APPROXIMATION_UNITS[unit];
+    const unitString = unitMap?.[unit] ?? unit; 
+    if (locale) return roundToPrecision(number / divider, precision).toLocaleString(locale) + unitString;
+    return String(roundToPrecision(number / divider, precision)) + unitString;
 }
