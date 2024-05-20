@@ -50,12 +50,26 @@ export function roundFromZero(number: number): number {
 }
 
 /**
+ * Rounds a number to 1 decimal place.
+ * @param number - The number to round.
+ * @returns The rounded number.
+ */
+export function roundToPrecision(number: number): number;
+/**
+ * Rounds a number to a specified precision.
+ * @param number - The number to round.
+ * @param precision - The number of decimal places to round to. Defaults to 1.
+ * @returns The rounded number.
+ */
+export function roundToPrecision(number: number, precision?: number): number;
+/**
  * Rounds a number to a specified precision using a specified rounding mode.
  * @param number - The number to round.
- * @param precision - The number of decimal places to round to.
+ * @param precision - The number of decimal places to round to. Defaults to 1.
  * @param mode - The rounding mode to use. Defaults to 'normal'.
  * @returns The rounded number.
  */
+export function roundToPrecision(number: number, precision?: number, mode?: 'normal' | 'up' | 'down' | 'to_zero' | 'from_zero'): number;
 export function roundToPrecision(number: number, precision: number = 1, mode: 'normal' | 'up' | 'down' | 'to_zero' | 'from_zero' = 'normal'): number {
     precision = 10 ** precision;
     switch (mode) {
@@ -73,13 +87,26 @@ export function roundToPrecision(number: number, precision: number = 1, mode: 'n
 }
 
 /**
+ * Rounds a number to the nearest multiple of a specified value.
+ * @param number - The number to round.
+ * @param multiple - The value to round to.
+ * @returns The rounded number.
+ *
+ * @example roundToMultiple(17, 3.75) 18.75
+ */
+export function roundToMultiple(number: number, multiple: number): number;
+/**
  * Rounds a number to the nearest multiple of a specified value using a specified rounding mode.
  * @param number - The number to round.
  * @param multiple - The value to round to.
  * @param mode - The rounding mode to use. Defaults to 'normal'.
  * @returns The rounded number.
+ * 
+ * @example roundToMultiple(17, 3.75, 'normal') 18.75
+ * @example roundToMultiple(17, 3.75, 'down') 15
  */
-export function roundToMultiple(number: number, multiple: number = 1, mode: 'normal' | 'up' | 'down' | 'to_zero' | 'from_zero' = 'normal'): number {
+export function roundToMultiple(number: number, multiple: number, mode?: 'normal' | 'up' | 'down' | 'to_zero' | 'from_zero'): number;
+export function roundToMultiple(number: number, multiple: number, mode: 'normal' | 'up' | 'down' | 'to_zero' | 'from_zero' = 'normal'): number {
     switch (mode) {
         case 'normal':
             return round(number / multiple) * multiple;
@@ -120,7 +147,7 @@ export type ApproximationUnit = keyof typeof APPROXIMATION_UNITS;
  * @param {ApproximationUnit | undefined} unit The abbreviation for the approximation unit to use. If not provided, will use the largest unit that keeps the value as `1 <= n < 1000`.
  * @param {string | undefined} locale The locale string to use when formatting the result with `toLocaleString()`. If not specified, `String()` will be used.
  * @param unitMap An object used for mapping default units to custom strings. If not specified or there is no mapping for the approximation unit, the default unit string will be used.
- * @param useSpace Whether there should be a space between the number and the unit.
+ * @param useSpace Whether there should be a space between the number and the unit. Defaults to true.
  * @returns The approximate value as a string with the abbreviation for the unit (specified or assumed) appended to it.
  */
 export function approximate(number: number, precision: number = 1, unit?: ApproximationUnit, locale?: string, unitMap?: { [key in ApproximationUnit]?: string }, useSpace: boolean = true): string {
